@@ -45,6 +45,12 @@ Run only `SmokeTest`:
 mvn clean -Dtest=SmokeTest test
 ```
 
+Run the Week 3 Day 2 WebDriver fundamentals flow:
+
+```bash
+mvn clean -Dtest=CatalogFlowTest test
+```
+
 Run headless:
 
 ```bash
@@ -58,6 +64,12 @@ mvn clean test -DbaseUrl=http://localhost:5173 -Dheadless=true
 ```
 
 The first browser run may take longer while Selenium Manager resolves and caches the matching ChromeDriver.
+
+Check W3D2 stability three times:
+
+```bash
+for i in 1 2 3; do mvn -q -Dtest=CatalogFlowTest test -Dheadless=true || break; done
+```
 
 ## Structure
 
