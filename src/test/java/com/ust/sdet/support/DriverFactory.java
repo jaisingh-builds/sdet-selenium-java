@@ -1,4 +1,4 @@
-package com.ust.sdet.utils;
+package com.ust.sdet.support;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,9 +8,11 @@ public final class DriverFactory {
     private DriverFactory() {
     }
 
-    public static WebDriver createDriver() {
+    public static WebDriver createChromeDriver() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+        if (Config.headless()) {
+            options.addArguments("--headless=new");
+        }
         options.addArguments("--window-size=1440,900");
         return new ChromeDriver(options);
     }

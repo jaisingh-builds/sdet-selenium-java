@@ -1,29 +1,73 @@
 # SDET Selenium Java
 
-Selenium Java starter framework for the UST Global SDET training retail app.
+Java 21, Maven, Selenium 4 and JUnit 5 starter framework for the UST Global SDET Retail Automation Lab.
 
-The application will use a ReactJS frontend over a POS/retail API and OMS microservice slice. Selenium tests should focus on the same user-facing flows students first automate in Playwright: login, products, cart, checkout, orders, profile, and admin.
+## W3D1 Outcome
 
-## Setup
+- Standard Maven test structure
+- Pinned Selenium, JUnit BOM and Surefire versions
+- `tests`, `pages` and `support` package discipline
+- Selenium Manager with no committed driver binaries
+- Fresh Chrome session per test
+- Catalog smoke test with headed and headless execution
+
+## Prerequisites
+
+- JDK 21
+- Maven 3.9+
+- Google Chrome
+- Retail frontend running at `http://localhost:5173`
+
+Start the frontend:
 
 ```bash
-mvn test
+cd ../sdet-retail-app/frontend
+npm run dev
 ```
 
-Override the app URL:
+## Commands
+
+Compile without launching a browser:
 
 ```bash
-mvn test -DbaseUrl=http://localhost:4000
+mvn clean test-compile
 ```
+
+Run the smoke test headed:
+
+```bash
+mvn clean test
+```
+
+Run only `SmokeTest`:
+
+```bash
+mvn clean -Dtest=SmokeTest test
+```
+
+Run headless:
+
+```bash
+mvn clean test -Dheadless=true
+```
+
+Override the frontend URL:
+
+```bash
+mvn clean test -DbaseUrl=http://localhost:5173 -Dheadless=true
+```
+
+The first browser run may take longer while Selenium Manager resolves and caches the matching ChromeDriver.
 
 ## Structure
 
-- `pages/`: Page Object Model classes.
-- `tests/`: TestNG tests.
-- `utils/`: Driver and configuration helpers.
+```text
+src/test/java/com/ust/sdet/
+  examples/   First browser-session demonstration
+  tests/      JUnit test classes and assertions
+  pages/      Page objects introduced on W3D3
+  support/    Driver and runtime configuration
+src/test/resources/
+```
 
-## Training Alignment
-
-- Week 3: Selenium Java comparison against the same ReactJS UI domain used in Week 1.
-- Week 5: Debugging UI failures and timing issues.
-- Week 7: Capstone UI coverage alongside API, DB, contract, and resilience evidence.
+Do not commit `target/`, browser drivers, IDE metadata, logs, `.env`, or secret files.

@@ -1,4 +1,8 @@
 target/
+drivers/
 .idea/
 *.iml
+*.log
+.env
+secrets.*
 .DS_Store
