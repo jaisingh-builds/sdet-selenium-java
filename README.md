@@ -51,6 +51,12 @@ Run the Week 3 Day 2 WebDriver fundamentals flow:
 mvn clean -Dtest=CatalogFlowTest test
 ```
 
+Run the Week 3 Day 3 Page Object Model flow:
+
+```bash
+mvn clean -Dtest=CatalogPomTest test
+```
+
 Run headless:
 
 ```bash
@@ -69,6 +75,12 @@ Check W3D2 stability three times:
 
 ```bash
 for i in 1 2 3; do mvn -q -Dtest=CatalogFlowTest test -Dheadless=true || break; done
+```
+
+Check W3D3 POM stability three times:
+
+```bash
+for i in 1 2 3; do mvn -q -Dtest=CatalogPomTest test -Dheadless=true || break; done
 ```
 
 ## Structure
