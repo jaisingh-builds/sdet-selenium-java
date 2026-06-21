@@ -15,4 +15,12 @@ public final class Config {
     public static boolean headless() {
         return Boolean.parseBoolean(System.getProperty("headless", "false"));
     }
+
+    public static String gridUrl() {
+        return System.getProperty("selenium.grid.url", "").trim();
+    }
+
+    public static boolean gridEnabled() {
+        return !gridUrl().isBlank();
+    }
 }

@@ -3,16 +3,17 @@ package com.ust.sdet.pages;
 import com.ust.sdet.pages.components.ProductCard;
 import com.ust.sdet.support.Config;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class CatalogPage extends BasePage {
     private static final By SEARCH = By.cssSelector("[data-test='search-input']");
+    private static final By SEARCH_BUTTON = By.cssSelector("[data-test='search-button']");
     private static final By RESULT_COUNT = By.cssSelector("[data-test='catalog-result-count']");
     private static final By EMPTY_SEARCH = By.cssSelector("[data-test='empty-search']");
     private static final By CARDS = By.cssSelector("[data-test='product-card']");
@@ -32,7 +33,8 @@ public class CatalogPage extends BasePage {
 
     public CatalogPage searchFor(String query) {
         String previousResultCount = text(RESULT_COUNT);
-        type(SEARCH, query, Keys.ENTER);
+        type(SEARCH, query);
+        click(SEARCH_BUTTON);
         wait.until((ignored) -> {
             String currentResultCount = text(RESULT_COUNT);
             return !currentResultCount.equals("Searching products...")
@@ -56,8 +58,9 @@ public class CatalogPage extends BasePage {
     }
 
     public List<ProductCard> cards() {
-        return visibleElements(CARDS).stream()
-            .map(ProductCard::new)
+        int cardCount = visibleElements(CARDS).size();
+        return IntStream.range(0, cardCount)
+            .mapToObj(index -> new ProductCard(driver, CARDS, index))
             .toList();
     }
 

@@ -1,4 +1,7 @@
 target/
+allure-results/
+test-output/
+evidence/
 drivers/
 .idea/
 *.iml
