@@ -1,9 +1,10 @@
 package com.ust.sdet.pages;
 
+import com.ust.sdet.pages.roles.CheckoutCapable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class CartPage extends BasePage {
+public class CartPage extends BasePage implements CheckoutCapable<CheckoutPage> {
     private static final By CART_PAGE = By.cssSelector("[data-test='cart-page']");
     private static final By LINES = By.cssSelector("[data-test='cart-line']");
     private static final By TOTAL = By.cssSelector("[data-test='cart-total']");

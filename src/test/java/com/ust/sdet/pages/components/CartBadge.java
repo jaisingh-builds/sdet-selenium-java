@@ -1,23 +1,27 @@
 package com.ust.sdet.pages.components;
 
+import com.ust.sdet.support.Config;
+import com.ust.sdet.support.Waits;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebDriver;
+
+import java.time.Duration;
 
 public class CartBadge {
     private static final By COUNT = By.cssSelector("[data-test='cart-count']");
+    private static final Duration TIMEOUT = Duration.ofSeconds(Config.timeoutSeconds());
 
-    private final WebDriverWait wait;
+    private final WebDriver driver;
 
-    public CartBadge(WebDriverWait wait) {
-        this.wait = wait;
+    public CartBadge(WebDriver driver) {
+        this.driver = driver;
     }
 
     public int count() {
-        return Integer.parseInt(wait.until(ExpectedConditions.visibilityOfElementLocated(COUNT)).getText());
+        return Integer.parseInt(Waits.visible(driver, COUNT, TIMEOUT).getText());
     }
 
     public void expectCount(int expectedCount) {
-        wait.until(ExpectedConditions.textToBe(COUNT, String.valueOf(expectedCount)));
+        Waits.textToBe(driver, COUNT, String.valueOf(expectedCount), TIMEOUT);
     }
 }

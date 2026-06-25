@@ -1,17 +1,18 @@
 package com.ust.sdet.pages;
 
+import com.ust.sdet.pages.roles.Navigable;
+import com.ust.sdet.pages.roles.Searchable;
 import com.ust.sdet.pages.components.ProductCard;
 import com.ust.sdet.support.Config;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class CatalogPage extends BasePage {
+public class CatalogPage extends BasePage implements Navigable<CatalogPage>, Searchable<CatalogPage> {
     private static final By SEARCH = By.cssSelector("[data-test='search-input']");
     private static final By SEARCH_BUTTON = By.cssSelector("[data-test='search-button']");
     private static final By RESULT_COUNT = By.cssSelector("[data-test='catalog-result-count']");
@@ -27,7 +28,7 @@ public class CatalogPage extends BasePage {
     public CatalogPage open() {
         driver.get(Config.catalogUrl());
         visible(SEARCH);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(RESULT_COUNT));
+        visible(RESULT_COUNT);
         return this;
     }
 
@@ -35,25 +36,25 @@ public class CatalogPage extends BasePage {
         String previousResultCount = text(RESULT_COUNT);
         type(SEARCH, query);
         click(SEARCH_BUTTON);
-        wait.until((ignored) -> {
+        com.ust.sdet.support.Waits.until(driver, (ignored) -> {
             String currentResultCount = text(RESULT_COUNT);
             return !currentResultCount.equals("Searching products...")
                 && !currentResultCount.equals(previousResultCount);
-        });
+        }, DEFAULT_TIMEOUT);
         return this;
     }
 
     public CatalogPage searchFor(String query, String expectedResultCount) {
         searchFor(query);
-        wait.until(ExpectedConditions.textToBe(RESULT_COUNT, expectedResultCount));
+        waitForText(RESULT_COUNT, expectedResultCount);
         return this;
     }
 
     public CatalogPage sortBy(String visibleText) {
         WebElement oldFirstCard = visible(CARDS);
         new Select(visible(SORT)).selectByVisibleText(visibleText);
-        wait.until(ExpectedConditions.stalenessOf(oldFirstCard));
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(CARDS, 0));
+        waitForStaleness(oldFirstCard);
+        waitForMoreThan(CARDS, 0);
         return this;
     }
 

@@ -135,6 +135,41 @@ mvn clean -Dtest=RunCucumberTest test \
 
 For Grid, the browser runs inside a container. Do not use `localhost:5173` as `baseUrl`; use the Docker host gateway URL provided by the trainer. On this Mac, `http://192.168.65.254:5174` was tested.
 
+## Week 4 Day 4 - SOLID & Reusable Utilities
+
+Day 4 refactors the Selenium framework so shared concerns have one home:
+
+- `Browser` enum and registry-based `DriverFactory`
+- `Waits` utility for explicit waits
+- `Config` as the runtime settings source
+- role interfaces: `Navigable`, `Searchable`, `CheckoutCapable`
+- `ApiClient` abstraction with `HttpApiClient`
+- `Day4SolidStructureTest` to verify the refactor without launching a browser
+
+Run the no-browser structure checks:
+
+```bash
+mvn clean -Dtest=Day4SolidStructureTest test
+```
+
+Run the full Day 4 demo script on macOS/Linux:
+
+```bash
+./scripts/day4-solid-demo.sh
+```
+
+Run it on Windows PowerShell:
+
+```powershell
+.\scripts\day4-solid-demo.ps1
+```
+
+Optional browser regression after the retail frontend is running:
+
+```bash
+mvn clean -Dtest=CatalogPomTest -Dheadless=true test
+```
+
 Run headless:
 
 ```bash

@@ -13,7 +13,7 @@ public class Header extends BasePage {
     }
 
     public CartBadge cartBadge() {
-        return new CartBadge(wait);
+        return new CartBadge(driver);
     }
 
     public CartPage openCart() {

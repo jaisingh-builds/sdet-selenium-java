@@ -16,6 +16,14 @@ public final class Config {
         return Boolean.parseBoolean(System.getProperty("headless", "false"));
     }
 
+    public static Browser browser() {
+        return Browser.from(System.getProperty("browser", "chrome"));
+    }
+
+    public static long timeoutSeconds() {
+        return Long.parseLong(System.getProperty("timeoutSeconds", "10"));
+    }
+
     public static String gridUrl() {
         return System.getProperty("selenium.grid.url", "").trim();
     }
