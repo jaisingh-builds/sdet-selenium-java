@@ -1,6 +1,6 @@
 # SDET Selenium Java
 
-Java 21, Maven, Selenium 4 and JUnit 5 starter framework for the UST Global SDET Retail Automation Lab.
+Java 17, Maven, Selenium 4, Selenide and JUnit 5 starter framework for the UST Global SDET Retail Automation Lab.
 
 ## W3D1 Outcome
 
@@ -13,7 +13,7 @@ Java 21, Maven, Selenium 4 and JUnit 5 starter framework for the UST Global SDET
 
 ## Prerequisites
 
-- JDK 21
+- JDK 17 or newer
 - Maven 3.9+
 - Google Chrome
 - Retail frontend running at `http://localhost:5173`
@@ -169,6 +169,44 @@ Optional browser regression after the retail frontend is running:
 ```bash
 mvn clean -Dtest=CatalogPomTest -Dheadless=true test
 ```
+
+## Week 4 Day 5 - Selenide Introduction
+
+Day 5 rewrites the catalog search flow with Selenide:
+
+- `$` and `$$` for concise element and collection access
+- `should`, `shouldBe`, `shouldHave` for built-in waits
+- `Configuration` for browser, headless, baseUrl and timeouts
+- `ScreenShooterExtension` for JUnit 5 failure screenshots
+- driver-free Selenide page object for catalog search, sort and empty-state checks
+
+`ScreenShooterExtension` is provided by the core `com.codeborne:selenide` jar in version `7.16.2`; do not add a separate `selenide-junit5` dependency.
+
+Run the Selenide catalog suite:
+
+```bash
+mvn clean -Dtest=SelenideCatalogTest -Dheadless=true test
+```
+
+Run the full Day 5 demo script on macOS/Linux:
+
+```bash
+./scripts/day5-selenide-demo.sh
+```
+
+Run it on Windows PowerShell:
+
+```powershell
+.\scripts\day5-selenide-demo.ps1
+```
+
+Intentional failure demo:
+
+```bash
+mvn -Dtest=SelenideFailureDemo -Dheadless=true test
+```
+
+The failure is expected; use it to show Selenide screenshots and failure details under `target/selenide-reports`.
 
 Run headless:
 
