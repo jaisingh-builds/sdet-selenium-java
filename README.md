@@ -208,6 +208,57 @@ mvn -Dtest=SelenideFailureDemo -Dheadless=true test
 
 The failure is expected; use it to show Selenide screenshots and failure details under `target/selenide-reports`.
 
+## Week 6 Day 1 - Refactoring Patterns
+
+Day 1 hardens the Selenium framework without changing user behaviour:
+
+- before sample: `MessyCheckoutBefore` with hard waits, hard-coded URL and driver creation
+- after code: `CheckoutJourney`, `WebDriverProvider`, `DefaultWebDriverProvider`
+- no-browser structure checks for BasePage reuse, locator ownership, driver inversion and DSL naming
+- optional browser checkout regression that proves the refactor still places an order
+
+Run the safe structure checks:
+
+```bash
+mvn clean -Dtest=W6D1RefactoringStructureTest test
+```
+
+Run the full refactored checkout flow after the retail frontend and backend are running:
+
+```bash
+mvn -Dtest=W6D1RefactoredCheckoutFlowTest -Dheadless=true test
+```
+
+If your frontend is on a different port:
+
+```bash
+mvn -Dtest=W6D1RefactoredCheckoutFlowTest -Dheadless=true -DbaseUrl=http://127.0.0.1:5176 test
+```
+
+Run the trainer helper script on macOS/Linux:
+
+```bash
+./scripts/day1-refactoring-demo.sh
+```
+
+Run the safe check plus optional browser proof on macOS/Linux:
+
+```bash
+RUN_BROWSER=true BASE_URL=http://localhost:5173 ./scripts/day1-refactoring-demo.sh
+```
+
+Run it on Windows PowerShell:
+
+```powershell
+.\scripts\day1-refactoring-demo.ps1
+```
+
+Run the safe check plus optional browser proof on Windows PowerShell:
+
+```powershell
+.\scripts\day1-refactoring-demo.ps1 -Browser -BaseUrl http://localhost:5173
+```
+
 Run headless:
 
 ```bash
