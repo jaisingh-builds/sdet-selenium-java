@@ -1,4 +1,6 @@
 target/
+build/
+.gradle/
 allure-results/
 test-output/
 evidence/

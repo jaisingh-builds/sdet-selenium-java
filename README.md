@@ -259,6 +259,56 @@ Run the safe check plus optional browser proof on Windows PowerShell:
 .\scripts\day1-refactoring-demo.ps1 -Browser -BaseUrl http://localhost:5173
 ```
 
+## Week 6 Day 2 - Build Tooling with Gradle
+
+Day 2 adds a Gradle variant beside the Maven build:
+
+- Gradle wrapper pinned in `gradle/wrapper/gradle-wrapper.properties`
+- `build.gradle.kts` mapped from the Maven Selenium/JUnit/Cucumber dependencies
+- `gradle.properties` speed levers: build cache, parallel mode and configuration cache
+- dedicated Gradle tasks: `w6d1StructureTest`, `w6d1CheckoutTest`, `cucumberSmoke`, `parallelStructureTest`
+- demo scripts that compare Maven and Gradle command flow
+
+Run the default Gradle build gate:
+
+```bash
+./gradlew clean build
+```
+
+This default Gradle `test` task runs classroom-safe structure checks only. Browser and Cucumber flows stay as explicit tasks so the build gate is not affected by app availability or intentional failure demos.
+
+Run the Gradle structure check:
+
+```bash
+./gradlew clean w6d1StructureTest
+```
+
+Run the Day 2 demo script on macOS/Linux:
+
+```bash
+./scripts/day2-gradle-demo.sh
+```
+
+Run it on Windows PowerShell:
+
+```powershell
+.\scripts\day2-gradle-demo.ps1
+```
+
+Generate a dependency graph:
+
+```bash
+./gradlew dependencies --configuration testRuntimeClasspath
+```
+
+Optional build scan:
+
+```bash
+./gradlew w6d1StructureTest --scan
+```
+
+## General Runtime Options
+
 Run headless:
 
 ```bash
