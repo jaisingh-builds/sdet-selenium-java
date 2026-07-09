@@ -13,6 +13,9 @@ val allureVersion = "2.33.0"
 val extentVersion = "5.1.2"
 val extentCucumberAdapterVersion = "1.14.0"
 val slf4jVersion = "2.0.17"
+val testcontainersVersion = "2.0.5"
+val flywayVersion = "10.22.0"
+val postgresqlVersion = "42.7.4"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -23,6 +26,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
     testImplementation(platform("io.cucumber:cucumber-bom:$cucumberVersion"))
     testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
+    testImplementation(platform("org.testcontainers:testcontainers-bom:$testcontainersVersion"))
 
     testImplementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
     testImplementation("com.codeborne:selenide:$selenideVersion")
@@ -35,6 +39,11 @@ dependencies {
     testImplementation("com.aventstack:extentreports:$extentVersion")
     testImplementation("tech.grasshopper:extentreports-cucumber7-adapter:$extentCucumberAdapterVersion")
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
+    testImplementation("org.testcontainers:testcontainers-junit-jupiter:$testcontainersVersion")
+    testImplementation("org.testcontainers:testcontainers-postgresql:$testcontainersVersion")
+    testImplementation("org.flywaydb:flyway-core:$flywayVersion")
+    testImplementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
+    testImplementation("org.postgresql:postgresql:$postgresqlVersion")
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -64,6 +73,7 @@ tasks.test {
     description = "Runs the default classroom-safe Gradle checks without launching a browser."
     include("**/Day4SolidStructureTest.class")
     include("**/W6D1RefactoringStructureTest.class")
+    include("**/W6D3TestDataBuilderStructureTest.class")
     maxParallelForks = 1
 }
 
@@ -103,6 +113,23 @@ val parallelStructureTest by tasks.registering(Test::class) {
     maxParallelForks = Runtime.getRuntime().availableProcessors().coerceAtMost(2)
 }
 
+val w6d3BuilderStructureTest by tasks.registering(Test::class) {
+    description = "Runs no-Docker Week 6 Day 3 builder and reset-strategy checks."
+    group = "verification"
+    useProjectTestClasses()
+    useJUnitPlatform()
+    include("**/W6D3TestDataBuilderStructureTest.class")
+}
+
+val w6d3DataStrategyTest by tasks.registering(Test::class) {
+    description = "Runs Week 6 Day 3 Testcontainers/Flyway isolated Postgres tests."
+    group = "verification"
+    useProjectTestClasses()
+    useJUnitPlatform()
+    include("**/OrdersDataIT.class")
+    maxParallelForks = 1
+}
+
 tasks.register("w6d2BuildSummary") {
     description = "Prints the Week 6 Day 2 Maven to Gradle command map."
     group = "help"
@@ -115,6 +142,8 @@ tasks.register("w6d2BuildSummary") {
             Maven structure: mvn clean -Dtest=W6D1RefactoringStructureTest test
             Gradle structure: ./gradlew clean w6d1StructureTest
             Gradle smoke: ./gradlew cucumberSmoke -Pheadless=true
+            Gradle W6D3 builder: ./gradlew w6d3BuilderStructureTest
+            Gradle W6D3 data IT: ./gradlew w6d3DataStrategyTest
             Gradle scan: ./gradlew w6d1StructureTest --scan
             """.trimIndent()
         )

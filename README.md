@@ -307,6 +307,54 @@ Optional build scan:
 ./gradlew w6d1StructureTest --scan
 ```
 
+## Week 6 Day 3 - Test Data Strategy
+
+Day 3 adds a test-data strategy example for the retail order domain:
+
+- `OrderBuilder` with sensible defaults and fluent overrides
+- `OrderFactory` to persist built data through a repository
+- Flyway migrations for schema and reference seed data
+- optional Testcontainers Postgres integration test for isolated database checks
+- no-Docker builder checks for participants who cannot run containers locally
+
+Run the no-Docker builder checks:
+
+```bash
+mvn -Dtest=W6D3TestDataBuilderStructureTest test
+./gradlew w6d3BuilderStructureTest
+```
+
+Run the optional isolated Postgres checks when Docker is available:
+
+```bash
+mvn -Dtest=OrdersDataIT test
+./gradlew w6d3DataStrategyTest
+```
+
+Run the full Day 3 demo script on macOS/Linux:
+
+```bash
+./scripts/day3-test-data-demo.sh
+```
+
+Run the same script with the optional container proof:
+
+```bash
+RUN_DOCKER=true ./scripts/day3-test-data-demo.sh
+```
+
+Run it on Windows PowerShell:
+
+```powershell
+.\scripts\day3-test-data-demo.ps1
+```
+
+Windows optional container proof:
+
+```powershell
+$env:RUN_DOCKER='true'; .\scripts\day3-test-data-demo.ps1
+```
+
 ## General Runtime Options
 
 Run headless:

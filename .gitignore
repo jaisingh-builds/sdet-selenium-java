@@ -6,6 +6,8 @@ test-output/
 evidence/
 drivers/
 .idea/
+**/.idea/
+*.jar
 *.iml
 *.log
 .env
