@@ -36,6 +36,7 @@ dependencies {
     testImplementation("io.cucumber:cucumber-picocontainer")
     testImplementation("org.junit.platform:junit-platform-suite")
     testImplementation("io.qameta.allure:allure-cucumber7-jvm")
+    testImplementation("io.qameta.allure:allure-junit5")
     testImplementation("com.aventstack:extentreports:$extentVersion")
     testImplementation("tech.grasshopper:extentreports-cucumber7-adapter:$extentCucumberAdapterVersion")
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
@@ -74,6 +75,7 @@ tasks.test {
     include("**/Day4SolidStructureTest.class")
     include("**/W6D1RefactoringStructureTest.class")
     include("**/W6D3TestDataBuilderStructureTest.class")
+    include("**/W6D4ReportingInsightsTest.class")
     maxParallelForks = 1
 }
 
@@ -130,6 +132,24 @@ val w6d3DataStrategyTest by tasks.registering(Test::class) {
     maxParallelForks = 1
 }
 
+val w6d4ReportingInsightsTest by tasks.registering(Test::class) {
+    description = "Runs no-browser Week 6 Day 4 Allure reporting checks."
+    group = "verification"
+    useProjectTestClasses()
+    useJUnitPlatform()
+    include("**/W6D4ReportingInsightsTest.class")
+}
+
+val w6d4FailureReportDemo by tasks.registering(Test::class) {
+    description = "Runs intentional Week 6 Day 4 failures so Allure categories have visible buckets."
+    group = "verification"
+    useProjectTestClasses()
+    useJUnitPlatform()
+    include("**/W6D4IntentionalFailureDemo.class")
+    ignoreFailures = true
+    maxParallelForks = 1
+}
+
 tasks.register("w6d2BuildSummary") {
     description = "Prints the Week 6 Day 2 Maven to Gradle command map."
     group = "help"
@@ -144,6 +164,8 @@ tasks.register("w6d2BuildSummary") {
             Gradle smoke: ./gradlew cucumberSmoke -Pheadless=true
             Gradle W6D3 builder: ./gradlew w6d3BuilderStructureTest
             Gradle W6D3 data IT: ./gradlew w6d3DataStrategyTest
+            Gradle W6D4 reporting: ./gradlew w6d4ReportingInsightsTest
+            Gradle W6D4 failure demo: ./gradlew w6d4FailureReportDemo
             Gradle scan: ./gradlew w6d1StructureTest --scan
             """.trimIndent()
         )

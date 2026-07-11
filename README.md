@@ -355,6 +355,53 @@ Windows optional container proof:
 $env:RUN_DOCKER='true'; .\scripts\day3-test-data-demo.ps1
 ```
 
+## Week 6 Day 4 - Reporting Insights
+
+Day 4 turns raw Allure results into a readable report:
+
+- `categories.json` splits product and test defects, with a quarantine/flaky rule for skipped signals
+- `environment.properties` and generated `executor.json` add run context
+- Allure history is carried forward so trend widgets grow
+- `W6D4ReportingInsightsTest` produces no-browser Allure results
+- demo scripts generate a local report when the Allure CLI is installed
+
+Run the no-browser reporting checks:
+
+```bash
+mvn -Dtest=W6D4ReportingInsightsTest test
+./gradlew w6d4ReportingInsightsTest
+```
+
+Generate a local report with three history points:
+
+```bash
+./scripts/day4-reporting-insights.sh
+```
+
+Generate a category demo with intentional product/test red buckets and a quarantined flaky signal:
+
+```bash
+REPORT_FAILURE_DEMO=true ./scripts/day4-reporting-insights.sh
+```
+
+Windows PowerShell:
+
+```powershell
+.\scripts\day4-reporting-insights.ps1
+```
+
+Windows category demo with intentional product/test red buckets and a quarantined flaky signal:
+
+```powershell
+$env:REPORT_FAILURE_DEMO='true'; .\scripts\day4-reporting-insights.ps1
+```
+
+Open the generated report:
+
+```bash
+allure open target/allure-report
+```
+
 ## General Runtime Options
 
 Run headless:

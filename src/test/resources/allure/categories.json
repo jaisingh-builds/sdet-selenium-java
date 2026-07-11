@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Flaky or quarantined tests",
+    "matchedStatuses": ["skipped"],
+    "flaky": true
+  },
+  {
+    "name": "Test defects (broken)",
+    "matchedStatuses": ["broken"]
+  },
+  {
+    "name": "Product defects",
+    "matchedStatuses": ["failed"]
+  }
+]
