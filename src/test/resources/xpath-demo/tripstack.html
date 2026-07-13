@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripStack XPath Practice</title>
+  <link rel="stylesheet" href="tripstack.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#search" aria-label="TripStack home">
+      <span class="brand-mark">TS</span>
+      <span>TripStack</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#search">Search</a>
+      <a href="#results">Trips</a>
+      <a href="#account">Account</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="search" class="hero-band" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Deterministic travel sandbox</p>
+        <h1 id="page-title">Find the right trip, precisely.</h1>
+        <p>Built for practising resilient XPath against dynamic travel widgets.</p>
+      </div>
+
+      <div class="search-panel">
+        <div class="field-group autosuggest">
+          <label for="from-field">From</label>
+          <input id="from-field" name="from" type="text" autocomplete="off"
+                 placeholder="Enter city or airport" aria-controls="city-suggestions"
+                 aria-autocomplete="list">
+          <ul id="city-suggestions" class="sg-list-a9f" role="listbox" hidden></ul>
+        </div>
+
+        <div class="field-group date-field">
+          <label for="departure-date">Departure</label>
+          <button id="departure-date" type="button" class="date-trigger"
+                  aria-haspopup="dialog" aria-expanded="false">Choose date</button>
+
+          <div id="calendar" class="calendar-popover" role="dialog"
+               aria-label="Choose departure date" hidden>
+            <div class="calendar-header">
+              <strong class="calendar-month" aria-live="polite"></strong>
+              <button type="button" class="DayPicker-NavButton DayPicker-NavButton--next"
+                      aria-label="Next month">Next</button>
+            </div>
+            <div class="weekday-row" aria-hidden="true">
+              <span>Su</span><span>Mo</span><span>Tu</span><span>We</span>
+              <span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+            <div class="calendar-grid"></div>
+          </div>
+        </div>
+
+        <button id="search-flights" type="button" class="primary-action">Search flights</button>
+        <p id="search-status" class="inline-status" role="status"></p>
+      </div>
+    </section>
+
+    <section id="results" class="results-band" aria-labelledby="results-title" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Delhi to Bengaluru</p>
+          <h2 id="results-title">Available trips</h2>
+        </div>
+        <div class="result-tabs" role="tablist" aria-label="Trip type">
+          <button id="flights-tab" role="tab" aria-selected="true">Flights</button>
+          <button id="buses-tab" role="tab" aria-selected="false">Buses</button>
+        </div>
+      </div>
+
+      <div id="flight-results" class="result-list">
+        <article class="flight-card-3b2">
+          <div class="carrier">
+            <span class="airline">IndiGo</span>
+            <span class="num">6E-2043</span>
+          </div>
+          <span class="route-time dep">06:15</span>
+          <span class="duration">2h 45m<br><small>Non-stop</small></span>
+          <span class="route-time arr">09:00</span>
+          <span class="price">&#8377; 4,899</span>
+          <button type="button" class="book-action">Book</button>
+        </article>
+
+        <article class="flight-card-7f1">
+          <div class="carrier">
+            <span class="airline">Air India</span>
+            <span class="num">AI-2817</span>
+          </div>
+          <span class="route-time dep">08:40</span>
+          <span class="duration">2h 50m<br><small>Non-stop</small></span>
+          <span class="route-time arr">11:30</span>
+          <span class="price">&#8377; 5,460</span>
+          <button type="button" class="book-action">Book</button>
+        </article>
+
+        <article class="flight-card-9c4">
+          <div class="carrier">
+            <span class="airline">Akasa Air</span>
+            <span class="num">QP-1352</span>
+          </div>
+          <span class="route-time dep">12:10</span>
+          <span class="duration">2h 55m<br><small>Non-stop</small></span>
+          <span class="route-time arr">15:05</span>
+          <span class="price">&#8377; 4,320</span>
+          <button type="button" class="book-action">Book</button>
+        </article>
+      </div>
+
+      <div id="bus-results" class="result-list" hidden>
+        <article class="bus-card-x31">
+          <div>
+            <span class="operator">Orange Tours</span>
+            <small>Volvo A/C Sleeper</small>
+          </div>
+          <span>20:30</span>
+          <span>10h 20m</span>
+          <span class="price">&#8377; 1,299</span>
+          <button type="button" class="seat-action">Select Seats</button>
+        </article>
+        <article class="bus-card-p84">
+          <div>
+            <span class="operator">GreenLine Travels</span>
+            <small>Scania Multi-Axle Sleeper</small>
+          </div>
+          <span>21:15</span>
+          <span>9h 55m</span>
+          <span class="price">&#8377; 1,549</span>
+          <button type="button" class="seat-action">Select Seats</button>
+        </article>
+        <article class="bus-card-r42">
+          <div>
+            <span class="operator">National Express</span>
+            <small>A/C Seater</small>
+          </div>
+          <span>22:00</span>
+          <span>11h 05m</span>
+          <span class="price">&#8377; 999</span>
+          <button type="button" class="seat-action">Select Seats</button>
+        </article>
+      </div>
+
+      <p id="booking-status" class="selection-status" role="status"></p>
+
+      <section id="seat-map" class="seat-map" aria-labelledby="seat-map-title" hidden>
+        <div class="seat-heading">
+          <div>
+            <p class="eyebrow">GreenLine Travels</p>
+            <h3 id="seat-map-title">Choose your seat</h3>
+          </div>
+          <div class="legend" aria-label="Seat legend">
+            <span><i class="available-dot"></i> Available</span>
+            <span><i class="booked-dot"></i> Booked</span>
+            <span><i class="ladies-dot"></i> Ladies</span>
+          </div>
+        </div>
+        <div class="seat-grid">
+          <button type="button" data-seat="L12" class="seat sleeper available">L12</button>
+          <button type="button" data-seat="L13" class="seat sleeper booked" disabled>L13</button>
+          <button type="button" data-seat="L14" class="seat sleeper available">L14</button>
+          <span class="aisle" aria-hidden="true"></span>
+          <button type="button" data-seat="U01" class="seat sleeper available ladies">U01</button>
+          <button type="button" data-seat="U02" class="seat sleeper available">U02</button>
+          <button type="button" data-seat="U03" class="seat sleeper booked" disabled>U03</button>
+        </div>
+        <p id="seat-status" class="inline-status" role="status"></p>
+      </section>
+    </section>
+
+    <section class="passenger-band" aria-labelledby="passenger-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Locator repair lab</p>
+          <h2 id="passenger-title">Passenger details</h2>
+        </div>
+      </div>
+      <div class="passenger-form">
+        <div class="field-group">
+          <label for="passenger_83921">Full name</label>
+          <input id="passenger_83921" type="text" autocomplete="name">
+        </div>
+        <div class="field-group">
+          <label for="passenger-email">Email address</label>
+          <input id="passenger-email" name="email" type="email" autocomplete="email">
+        </div>
+      </div>
+    </section>
+
+    <section id="account" class="account-band" aria-labelledby="account-title">
+      <div>
+        <p class="eyebrow">Secret-safe test data</p>
+        <h2 id="account-title">Traveller account</h2>
+        <p>Use a runtime secret, mask the report parameter, and clear the field after submission.</p>
+      </div>
+      <form id="account-form" class="account-form">
+        <div class="field-group">
+          <label for="account-email">Account email</label>
+          <input id="account-email" name="account-email" type="email" autocomplete="username">
+        </div>
+        <div class="field-group">
+          <label for="account-password">Account password</label>
+          <input id="account-password" name="account-password" type="password"
+                 autocomplete="current-password">
+        </div>
+        <button type="submit" class="secondary-action">Sign in safely</button>
+        <p id="account-status" class="inline-status" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="tripstack.js"></script>
+</body>
+</html>

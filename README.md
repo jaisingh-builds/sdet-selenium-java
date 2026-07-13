@@ -2,6 +2,22 @@
 
 Java 17, Maven, Selenium 4, Selenide and JUnit 5 starter framework for the UST Global SDET Retail Automation Lab.
 
+## Special Session - XPath in Practice
+
+The one-hour XPath session uses a deterministic local TripStack travel page, reusable XPath templates, page/component objects, and a runtime-secret safety demo. No retail app or external travel website is required.
+
+```bash
+./scripts/xpath-in-practice-demo.sh
+```
+
+Windows PowerShell:
+
+```powershell
+.\scripts\xpath-in-practice-demo.ps1
+```
+
+Trainer notes and exercises are under `docs/xpath-in-practice/`.
+
 ## W3D1 Outcome
 
 - Standard Maven test structure
