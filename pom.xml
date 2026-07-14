@@ -15,6 +15,8 @@
     <build.label>local</build.label>
     <selenium.version>4.45.0</selenium.version>
     <selenide.version>7.16.2</selenide.version>
+    <rest.assured.version>6.0.0</rest.assured.version>
+    <assertj.version>3.27.6</assertj.version>
     <junit.version>5.14.4</junit.version>
     <cucumber.version>7.34.3</cucumber.version>
     <allure.version>2.33.0</allure.version>
@@ -24,6 +26,7 @@
     <testcontainers.version>2.0.5</testcontainers.version>
     <flyway.version>10.22.0</flyway.version>
     <postgresql.version>42.7.4</postgresql.version>
+    <mysql.version>9.4.0</mysql.version>
     <maven.clean.version>3.5.0</maven.clean.version>
     <maven.compiler.version>3.14.1</maven.compiler.version>
     <maven.resources.version>3.4.0</maven.resources.version>
@@ -64,6 +67,24 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>${rest.assured.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>json-schema-validator</artifactId>
+      <version>${rest.assured.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
@@ -157,6 +178,12 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>${postgresql.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>${mysql.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

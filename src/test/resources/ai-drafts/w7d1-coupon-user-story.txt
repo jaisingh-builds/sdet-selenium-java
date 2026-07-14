@@ -1,0 +1,4 @@
+As a customer, I apply a valid coupon at checkout and see the discounted total.
+
+Draft an end-to-end Selenium and REST Assured test. Treat the output as a first draft:
+the reviewer must verify selectors, waits, endpoints, assertions, and test data before merging it.

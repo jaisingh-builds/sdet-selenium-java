@@ -418,6 +418,49 @@ Open the generated report:
 allure open target/allure-report
 ```
 
+## Week 7 Day 1 - E2E Assembly and AI Authoring
+
+Day 1 assembles one traceable order journey across four layers:
+
+- REST Assured seeds the cart from one `OrderDraft`
+- Selenium checks out and captures the order ID from the URL
+- REST Assured fetches that exact order once
+- JDBC verifies the same order row
+- JSON Schema validates the already-fetched response
+- the AI review exercise replaces an invented selector, hard wait, latest-order lookup, weak assertion and hard-coded total
+
+Run the complete isolated demo with Docker/Testcontainers:
+
+```bash
+./scripts/day1-e2e-ai-demo.sh
+```
+
+Windows PowerShell:
+
+```powershell
+.\scripts\day1-e2e-ai-demo.ps1
+```
+
+Run the AI hardening checks without Docker or a browser:
+
+```bash
+mvn -Dtest=W7D1AiHardeningReviewTest test
+```
+
+Run against an existing ShopKart and MySQL/PostgreSQL environment:
+
+```bash
+export W7D1_RUNTIME=external
+export SHOPKART_BASE_URL=http://localhost:8080
+export SHOPKART_JDBC_URL='jdbc:mysql://localhost:3306/shopkart'
+export SHOPKART_DB_USER=shopkart_user
+export SHOPKART_DB_PASSWORD='your-password'
+export SHOPKART_ALICE_PASSWORD='your-seeded-alice-password'
+./scripts/day1-e2e-ai-demo.sh
+```
+
+The successful E2E result must say `2 tests`, `0 failures`, `0 errors` and `0 skipped`.
+
 ## General Runtime Options
 
 Run headless:

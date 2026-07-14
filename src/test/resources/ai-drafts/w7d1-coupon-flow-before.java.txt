@@ -1,0 +1,6 @@
+// AI DRAFT - intentionally unreviewed and unsafe
+driver.findElement(By.id("promo")).sendKeys("SAVE10");
+Thread.sleep(5000);
+Response response = get("/orders/latest");
+assertThat(response).isNotNull();
+response.then().body("total", equalTo(899));
