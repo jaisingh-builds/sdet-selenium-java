@@ -461,6 +461,48 @@ export SHOPKART_ALICE_PASSWORD='your-seeded-alice-password'
 
 The successful E2E result must say `2 tests`, `0 failures`, `0 errors` and `0 skipped`.
 
+## Week 7 Day 2 - Resilience and Agentic Triage
+
+Day 2 adds a Java component boundary for inventory-aware checkout and tests the complete resilience arc:
+
+- healthy WireMock baseline
+- 503 outage and circuit-breaker short-circuit
+- client timeout for latency
+- strict rejection of wrong-typed JSON
+- one retry for a connection reset
+- automatic `OPEN -> HALF_OPEN -> CLOSED` recovery without restart
+- bounded `plan -> act -> observe -> adapt` triage over failed-run artifacts
+- read-only tools, one staging-only rerun, redaction and a human approval gate
+
+Run the complete trainer demo:
+
+```bash
+./scripts/day2-resilience-triage-demo.sh
+```
+
+Windows PowerShell:
+
+```powershell
+.\scripts\day2-resilience-triage-demo.ps1
+```
+
+Maven commands:
+
+```bash
+mvn -Dtest=W7D2ResilienceTest test
+mvn -Dtest=W7D2AgenticTriageTest test
+```
+
+Gradle commands:
+
+```bash
+./gradlew w7d2Resilience
+./gradlew w7d2AgenticTriage
+./gradlew w7d2Day
+```
+
+Evidence is written to `target/w7d2-resilience-evidence.md` and `target/w7d2-triage-report.md`.
+
 ## General Runtime Options
 
 Run headless:

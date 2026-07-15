@@ -1,0 +1,11 @@
+{
+  "runId": "run-142",
+  "scenario": "coupon-checkout",
+  "status": "failed",
+  "failure": "Expected checkout status PLACED but inventory returned 503",
+  "authorization": "Bearer training-secret-123",
+  "apiKey": "demo-api-key-456",
+  "password": "demo-password-789",
+  "customer": "alice@shopkart.test",
+  "customerId": 501
+}

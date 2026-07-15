@@ -1,0 +1,8 @@
+{
+  "traceId": "trace-abc-142",
+  "runId": "run-142",
+  "spans": [
+    {"service": "checkout", "operation": "place-order", "status": "error"},
+    {"service": "inventory", "operation": "GET /inventory/SKU-1", "httpStatus": 503}
+  ]
+}

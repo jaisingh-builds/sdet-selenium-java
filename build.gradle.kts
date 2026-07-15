@@ -19,6 +19,10 @@ val testcontainersVersion = "2.0.5"
 val flywayVersion = "10.22.0"
 val postgresqlVersion = "42.7.4"
 val mysqlVersion = "9.4.0"
+val jacksonVersion = "2.18.2"
+val wireMockVersion = "3.13.2"
+val awaitilityVersion = "4.3.0"
+val resilience4jVersion = "2.4.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -26,6 +30,11 @@ java {
 }
 
 dependencies {
+    implementation(platform("io.github.resilience4j:resilience4j-bom:$resilience4jVersion"))
+    implementation("io.github.resilience4j:resilience4j-circuitbreaker")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
     testImplementation(platform("io.cucumber:cucumber-bom:$cucumberVersion"))
     testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
@@ -52,6 +61,8 @@ dependencies {
     testImplementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
     testImplementation("org.postgresql:postgresql:$postgresqlVersion")
     testImplementation("com.mysql:mysql-connector-j:$mysqlVersion")
+    testImplementation("org.wiremock:wiremock:$wireMockVersion")
+    testImplementation("org.awaitility:awaitility:$awaitilityVersion")
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -176,6 +187,30 @@ val w7d1AiReview by tasks.registering(Test::class) {
     include("**/W7D1AiHardeningReviewTest.class")
 }
 
+val w7d2Resilience by tasks.registering(Test::class) {
+    description = "Runs the Week 7 Day 2 WireMock fault, breaker and recovery checks."
+    group = "verification"
+    useProjectTestClasses()
+    useJUnitPlatform()
+    include("**/W7D2ResilienceTest.class")
+    maxParallelForks = 1
+}
+
+val w7d2AgenticTriage by tasks.registering(Test::class) {
+    description = "Runs the bounded Week 7 Day 2 artifact-triage loop and safety checks."
+    group = "verification"
+    useProjectTestClasses()
+    useJUnitPlatform()
+    include("**/W7D2AgenticTriageTest.class")
+    maxParallelForks = 1
+}
+
+tasks.register("w7d2Day") {
+    description = "Runs both Week 7 Day 2 resilience and triage suites."
+    group = "verification"
+    dependsOn(w7d2Resilience, w7d2AgenticTriage)
+}
+
 tasks.register("w6d2BuildSummary") {
     description = "Prints the Week 6 Day 2 Maven to Gradle command map."
     group = "help"
@@ -194,6 +229,9 @@ tasks.register("w6d2BuildSummary") {
             Gradle W6D4 failure demo: ./gradlew w6d4FailureReportDemo
             Gradle W7D1 E2E: ./gradlew w7d1E2E -Pw7d1Runtime=container -Pheadless=true
             Gradle W7D1 AI review: ./gradlew w7d1AiReview
+            Gradle W7D2 resilience: ./gradlew w7d2Resilience
+            Gradle W7D2 triage: ./gradlew w7d2AgenticTriage
+            Gradle W7D2 all: ./gradlew w7d2Day
             Gradle scan: ./gradlew w6d1StructureTest --scan
             """.trimIndent()
         )
